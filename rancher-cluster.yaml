@@ -1,0 +1,41 @@
+nodes:
+  - address: 10.127.226.30
+    user: rkeadmin
+    internal_address: 10.155.175.7
+    ssh_key_path: /home/rkeadmin/.ssh/id_rsa
+    role: [controlplane, worker, etcd]
+  - address: 10.127.226.31
+    user: rkeadmin
+    internal_address: 10.155.175.8
+    ssh_key_path: /home/rkeadmin/.ssh/id_rsa
+    role: [controlplane, worker, etcd]
+  - address: 10.127.226.32
+    user: rkeadmin
+    internal_address: 10.155.175.9
+    ssh_key_path: /home/rkeadmin/.ssh/id_rsa
+    role: [controlplane, worker, etcd]
+
+services:
+  kube-api:
+    service_cluster_ip_range: 10.17.0.0/22
+  kube-controller:
+    cluster_cidr: 10.17.128.0/17
+    service_cluster_ip_range: 10.17.0.0/22
+  kubelet:
+    cluster_domain: cluster.local
+    cluster_dns_server: 10.17.0.10
+  etcd:
+    backup_config:
+      enabled: true     # enables recurring etcd snapshots
+      interval_hours: 6 # time increment between snapshots
+      retention: 30     # time in days before snapshot purge
+
+network:
+  plugin: none
+
+# Required for external TLS termination with
+# ingress-nginx v0.22+
+ingress:
+  provider: nginx
+  options:
+    use-forwarded-headers: "true"

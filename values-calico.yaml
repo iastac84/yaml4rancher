@@ -1,0 +1,25 @@
+ipv4Pool: "10.17.128.0/18"
+internalInterface: eth2
+typhaReplicas: 3
+
+bgpConfig:
+  clusterAS: 64800
+  externalIps:
+  - 10.155.173.144/31
+uplinks: 
+  - name: uplink1
+    peerIp: 10.155.173.114
+    peerAS: 64700
+    subnet: all
+    advIpPools: false
+  - name: uplink2
+    peerIp: 10.155.173.115
+    peerAS: 64700
+    subnet: all
+    advIpPools: false
+bfd:
+  enabled: "true
+  interface: "eth*
+  interval: "300
+  minRxInterval: "300
+  multiplier: "3
